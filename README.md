@@ -40,7 +40,29 @@ Me permite ejecutar una consulta al API para obtener informacion. Debo indicar q
 
 # Resolvers
 
-Funcion o metodo que resuelve el valor dado para un tipo o campo en un schema
+Funcion o metodo que resuelve el valor dado para un tipo o campo en un schema. Pueden retornar objetos, strings,booleans, numbers.
+
+Los resolvers tb puede ser asincronos osea que pueden resolver valores de otras API RESTs, BD, cache etc...
+
+# Custom Types
+
+GraphQL nos permite configurar nuestros propios tipos de datos, estos deben tener la siguientes sintaxis:
+
+```
+type <Nombre del tipo> {
+  propiedad: Tipo de dato
+}
+```
+
+Dentro de nuestros tipos de datos podemos configurar un campo de un tipo como obligatorio con el signo “!”, quedando por ejemplo:
+
+```
+type Course {
+  title: String!
+}
+```
+
+# Argumentos
 
 # Articulos Interesantes
 

@@ -4,6 +4,9 @@
   "description": "<https://graphql.org/>",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon -e js,graphql index.js",
+    "lint": "standard || exit 0",
+    "lint-fix": "standard --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +23,10 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-graphql": "^0.11.0",
-    "graphql": "^15.3.0"
+    "graphql": "^15.3.0",
+    "graphql-tools": "^6.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }

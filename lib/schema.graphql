@@ -1,0 +1,18 @@
+"Courses"
+type Courses {
+  "Course Indentifier"
+  _id: ID
+  "Course Title"
+  title: String
+  "Main teacher of the Course"
+  teacher: String
+  "Small description about the course"
+  description: String
+  "Tags"
+  topic: String
+}
+
+type Query {
+  "Return all courses on the platform"
+  getCourses: [Courses]
+}
