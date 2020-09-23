@@ -1,7 +1,39 @@
 "Courses"
-type Courses {
+type Course {
   "Course Indentifier"
-  _id: ID
+  _id: ID!
+  "Course Title"
+  title: String!
+  "Main teacher of the Course"
+  teacher: String
+  "Small description about the course"
+  description: String!
+  "Tags"
+  topic: String
+  people: [Student]
+}
+
+"Students"
+type Student {
+  _id: ID!
+  "Student full name"
+  name: String!
+  "Student personal email"
+  email: String!
+}
+
+input CourseCreateInput {
+  "Course Title"
+  title: String!
+  "Main teacher of the Course"
+  teacher: String!
+  "Small description about the course"
+  description: String!
+  "Tags"
+  topic: String
+}
+
+input CourseEditInput {
   "Course Title"
   title: String
   "Main teacher of the Course"
@@ -12,7 +44,46 @@ type Courses {
   topic: String
 }
 
+input StudentCreateInput {
+  "Student full name"
+  name: String!
+  "Student personal email"
+  email: String!
+}
+
+input StudentEditInput {
+  "Student full name"
+  name: String
+  "Student personal email"
+  email: String
+}
+
+"Operaciones para consultar informacion"
 type Query {
   "Return all courses on the platform"
-  getCourses: [Courses]
+  getCourses: [Course]
+  "Return one specific course on the platform"
+  getCourse(id: ID!): Course
+  "Return all student on the platform"
+  getStudents: [Student]
+  "Return one specific student on the platform"
+  getStudent(id: ID!): Student
+}
+
+"Operaciones para almacenar informacion"
+type Mutation {
+  "Create a course"
+  createCourse(input: CourseCreateInput!): Course
+  "Edit a course"
+  editCourse(id: ID!, input: CourseEditInput!): Course
+  "Remove a course"
+  removeCourse(id: ID!): Course
+  "Create a student"
+  createStudent(input: StudentCreateInput!): Student
+  "Edit a student"
+  editStudent(id: ID!, input: StudentEditInput!): Student
+  "Remove a student"
+  removeStudent(id: ID!): Student
+  "Add a person to a coruse"
+  addPeople(courseID: ID!, personID: ID!): Course
 }
