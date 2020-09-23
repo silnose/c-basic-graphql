@@ -1,0 +1,53 @@
+query coursesGet
+{
+ getCourses{_id,title, description, teacher,topic, people {_id}}
+
+}
+
+query coursesGetOne
+{
+ getCourse(id:"5f6a78d808c0b1aeec9a6d70"){_id,title, description, teacher,topic, people {_id}}
+}
+
+mutation coursesCreate{
+  createCourse(input: {title:"Jquery",description:"Jquery 10", teacher:"Edgardo Ponce", topic:"js"})
+    {_id}
+  }
+
+mutation coursesEdit{
+  createCourse(input: {title:"Jquery",description:"Jquery 10", teacher:"Edgardo Ponce", topic:"js"})
+    {_id}
+  
+  editCourse(id:"5f6a78d808c0b1aeec9a6d71", input: {teacher: "Silnose"}){_id, title, teacher}
+}
+
+mutation coursesDelete{
+  removeCourse(id: "5f6a871ba18a4e209d5ebcc7"){title}
+    
+}
+
+query studentsGet
+{
+ getStudents{_id,name,email}
+  getStudent(id: "5f6a78d808c0b1aeec9a6d70"){_id,name,email}
+ 
+}
+
+mutation studentCreate{
+  createStudent(input: {name:"silvia",email:"silvia@gmail.com"}){_id}
+  
+}
+
+mutation studentEdit{
+  editStudent(id: "5f6a953c700289330ba956f7", input:{email:"silvina.perez@gmail"}){_id,name,email}
+  
+}
+
+mutation studentDelete{
+  removeStudent(id: "5f6a9b87bce9a33c3db06551"){name}
+    
+}
+
+mutation coursesAndPeople {
+  addPeople(courseID:"5f6a78d808c0b1aeec9a6d72",personID:"5f6a953c700289330ba956f7"){title}
+}

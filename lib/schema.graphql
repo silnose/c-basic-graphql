@@ -1,3 +1,12 @@
+"Validate types of levels"
+enum Level {
+  beginners
+  intermediate
+  advanced
+}
+
+union GlobalSearch = Course | Student | Mentor
+
 "Courses"
 type Course {
   "Course Indentifier"
@@ -9,19 +18,33 @@ type Course {
   "Small description about the course"
   description: String!
   "Tags"
-  topic: String
-  people: [Student]
+  topic: String @deprecated
+  people: [Person]
+  level: Level
 }
 
-"Students"
-type Student {
+interface Person {
+  _id: ID!
+  name: String!
+  email: String!
+}
+
+"Student"
+type Student implements Person {
   _id: ID!
   "Student full name"
   name: String!
   "Student personal email"
   email: String!
+  avatar: String
 }
 
+type Mentor implements Person {
+  _id: ID!
+  name: String!
+  email: String!
+  phone: String
+}
 input CourseCreateInput {
   "Course Title"
   title: String!
@@ -31,6 +54,7 @@ input CourseCreateInput {
   description: String!
   "Tags"
   topic: String
+  level: Level
 }
 
 input CourseEditInput {
@@ -44,18 +68,22 @@ input CourseEditInput {
   topic: String
 }
 
-input StudentCreateInput {
-  "Student full name"
+input PersonCreateInput {
+  "Person full name"
   name: String!
-  "Student personal email"
+  "Person personal email"
   email: String!
+  phone: String
+  avatar: String
 }
 
-input StudentEditInput {
-  "Student full name"
+input PersonEditInput {
+  "Person full name"
   name: String
-  "Student personal email"
+  "Person personal email"
   email: String
+  phone: String
+  avatar: String
 }
 
 "Operaciones para consultar informacion"
@@ -64,10 +92,12 @@ type Query {
   getCourses: [Course]
   "Return one specific course on the platform"
   getCourse(id: ID!): Course
-  "Return all student on the platform"
-  getStudents: [Student]
-  "Return one specific student on the platform"
-  getStudent(id: ID!): Student
+  "Return all Person on the platform"
+  getPeople: [Person]
+  "Return one specific Person on the platform"
+  getPerson(id: ID!): Person
+  "global search"
+  searchItems(keyword: String!): [GlobalSearch]
 }
 
 "Operaciones para almacenar informacion"
@@ -78,12 +108,12 @@ type Mutation {
   editCourse(id: ID!, input: CourseEditInput!): Course
   "Remove a course"
   removeCourse(id: ID!): Course
-  "Create a student"
-  createStudent(input: StudentCreateInput!): Student
-  "Edit a student"
-  editStudent(id: ID!, input: StudentEditInput!): Student
-  "Remove a student"
-  removeStudent(id: ID!): Student
+  "Create a person"
+  createPerson(input: PersonCreateInput!): Person
+  "Edit a person"
+  editPerson(id: ID!, input: PersonEditInput!): Person
+  "Remove a person"
+  removePerson(id: ID!): Person
   "Add a person to a coruse"
   addPeople(courseID: ID!, personID: ID!): Course
 }
